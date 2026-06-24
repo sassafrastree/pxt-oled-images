@@ -1,5 +1,5 @@
-oledMap.init()
-oledMap.drawImage(oledMap.imageMap32(`
+oledImages.init()
+oledImages.drawImage(oledImages.imageMapL(`
     . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     . . . # . . . # . . # . . . . . . . . . . . . . . . . . . . . .
@@ -17,6 +17,3 @@ oledMap.drawImage(oledMap.imageMap32(`
     . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     `), 0, 0)
-basic.forever(function () {
-
-})

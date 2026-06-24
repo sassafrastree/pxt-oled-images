@@ -3,11 +3,10 @@
  * License: MIT
  * Original By: Pythom1234
  * Fork By: sassafrastree
- * https://github.com/Pythom1234/pxt-oled
  */
 
 //% color=#3D66B3 icon="\uf108" block="OLED"
-namespace oledMap {
+namespace oledImages {
     const ADDR = 0x3C
     let screen = pins.createBuffer(1025)
     let charset: number[][] = []
@@ -292,7 +291,7 @@ namespace oledMap {
     //% advanced=true
     //% shim=images::createImage
     //% imageLiteral=1 imageLiteralRows=16 imageLiteralColumns=32
-    export function imageMap32(leds: string): Image {
+    export function imageMapL(leds: string): Image {
         return <Image><any>leds
     }
     /**
@@ -301,7 +300,7 @@ namespace oledMap {
     //% block="image: 16x8"
     //% shim=images::createImage
     //% imageLiteral=1 imageLiteralRows=8 imageLiteralColumns=16
-    export function imageMap16(leds: string): Image {
+    export function imageMapS(leds: string): Image {
         return <Image><any>leds
     }
 }
