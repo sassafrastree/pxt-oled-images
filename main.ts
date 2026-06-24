@@ -83,9 +83,7 @@ namespace oledMap {
         draw()
     }
     /**
-     * Fills the display buffer with specified color.
-     * You need to call `draw` to see the changes.
-     * @param color filling color (usually `false`)
+     * Clears screen
      */
     //% block="clear"
     //% weight=99
@@ -93,9 +91,7 @@ namespace oledMap {
         screen.fill(0)
     }
     /**
-     * Sends buffer to OLED display.
-     * This command must be called whenever you want to show something on the OLED display.
-     */
+    */
     //% block="draw"
     //% weight=98
     function draw(): void {
@@ -107,7 +103,6 @@ namespace oledMap {
     }
     /**
      * Sets pixel at x y to specified color color.
-     * You need to call `draw` to see the changes.
      * @param x coordinate x (increases towards the right)
      * @param y coordinate y (increases downwards)
      * @param color color of pixel
@@ -123,51 +118,17 @@ namespace oledMap {
         }
     }
     /**
-     * Toggles pixel at x y, it means that `true` will be `false` and vice versa.
-     * You need to call `draw` to see the changes.
-     * @param x coordinate x (increases towards the right)
-     * @param y coordinate y (increases downwards)
-     */
-    //% block="toggle pixel at x $x y $y"
-    //% weight=96
-    //% advanced=true
-    export function togglePx(x: number, y: number): void {
-        const index2 = Math.round(Math.floor(y / 8) * 128 + x + 1)
-        if ((index2 < 1025) && (index2 > -1) && (x < 128) && (x > -1) && (y > -1) && (y < 128)) {
-            screen[index2] = (!px(x, y)) ? showbit(screen[index2], (y % 8)) : hidebit(screen[index2], (y % 8))
-        }
-    }
-    /**
-     * Returns color of pixel at x y in buffer.
-     * @param x coordinate x (increases towards the right)
-     * @param y coordinate y (increases downwards)
-     */
-    //% block="pixel at x $x y $y"
-    //% weight=95
-    //% advanced=true
-    export function px(x: number, y: number): boolean {
-        const index3 = Math.round(Math.floor(y / 8) * 128 + x + 1)
-        if ((index3 < 1025) && (index3 > -1) && (x < 128) && (x > -1) && (y > -1) && (y < 128)) {
-            return getbit(screen[index3], (y % 8)) == 1
-        } else {
-            return false
-        }
-    }
-    /**
      * Draws text with upper left corner at x y.
      * Text has fixed width (8 px).
-     * You need to call `draw` to see the changes.
      * @param text text to draw (not all characters are implemented yet)
      * @param x coordinate x of upper left corner of text (increases towards the right)
      * @param y coordinate y of upper left corner of text (increases downwards)
      * @param color color of text
-     * @param toggle sets whether to use pixel switching instead of setting the pixel to a specific color (if `true`, `color` means nothing)
      */
-    //% block="draw text $text at|x $x|y $y|color $color|toggle $toggle"
+    //% block="draw text $text at|x $x|y $y|color $color"
     //% color.defl=true
-    //% toggle.defl=false
     //% weight=94
-    export function drawText(text: string, x: number, y: number, color: boolean, toggle: boolean): void {
+    export function drawText(text: string, x: number, y: number, color: boolean): void {
         const font = [
             [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
             [0x00, 0x10, 0x10, 0x10, 0x10, 0x10, 0x00, 0x10, 0x10, 0x00, 0x00],
@@ -275,11 +236,7 @@ namespace oledMap {
                 for (let j = 0; j < 11; j++) {
                     for (let k = 0; k < 8; k++) {
                         if (charset[charsetIndex.indexOf(text[i])][j] & (0x01 << k)) {
-                            if (toggle) {
-                                togglePx(x + ((i - lineStart) * 8) + (8 - k), y + (line * 10) + j)
-                            } else {
-                                setPx(x + ((i - lineStart) * 8) + (8 - k), y + (line * 10) + j, color)
-                            }
+                            setPx(x + ((i - lineStart) * 8) + (8 - k), y + (line * 10) + j, color)
                         }
                     }
                 }
@@ -287,11 +244,7 @@ namespace oledMap {
                 for (let l = 0; l < 11; l++) {
                     for (let m = 0; m < 8; m++) {
                         if (font[text[i].charCodeAt(0) - 32][l] & (0x01 << m)) {
-                            if (toggle) {
-                                togglePx(x + ((i - lineStart) * 8) + (8 - m), y + (line * 10) + l)
-                            } else {
-                                setPx(x + ((i - lineStart) * 8) + (8 - m), y + (line * 10) + l, color)
-                            }
+                            setPx(x + ((i - lineStart) * 8) + (8 - m), y + (line * 10) + l, color)
                         }
                     }
                 }
@@ -303,7 +256,6 @@ namespace oledMap {
     }
     /**
      * Draws image.
-     * You need to call `draw` to see the changes.
      * @param image image to draw (can be `images.createImage()` or image from extension `imageio`)
      * @param x coordinate x of upper left corner of image (increases towards the right)
      * @param y coordinate y of upper left corner of image (increases downwards)
@@ -334,6 +286,7 @@ namespace oledMap {
         draw()
     }
     /**
+     * Image map of 32x16.
      */
     //% block="image: 32x16"
     //% advanced=true
@@ -343,6 +296,7 @@ namespace oledMap {
         return <Image><any>leds
     }
     /**
+     * Image map of 16x8.
      */
     //% block="image: 16x8"
     //% shim=images::createImage
