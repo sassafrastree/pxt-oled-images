@@ -101,19 +101,17 @@ namespace oledImages {
         pins.i2cWriteBuffer(ADDR, screen, false)
     }
     /**
-     * Sets pixel at x y to specified color color.
+     * Sets pixel at x y to on.
      * @param x coordinate x (increases towards the right)
      * @param y coordinate y (increases downwards)
-     * @param color color of pixel
      */
-    //% block="set pixel at x $x y $y to $color"
-    //% color.defl=true
+    //% block="set pixel at x $x y $y"
     //% weight=97
     //% advanced=true
-    export function setPx(x: number, y: number, color: boolean): void {
+    export function setPx(x: number, y: number): void {
         const index = Math.round(Math.floor(y / 8) * 128 + x + 1)
         if ((index < 1025) && (index > -1) && (x < 128) && (x > -1) && (y > -1) && (y < 128)) {
-            screen[index] = (color) ? showbit(screen[index], (y % 8)) : hidebit(screen[index], (y % 8))
+            screen[index] = showbit(screen[index], (y % 8))
         }
     }
     /**
@@ -122,12 +120,10 @@ namespace oledImages {
      * @param text text to draw (not all characters are implemented yet)
      * @param x coordinate x of upper left corner of text (increases towards the right)
      * @param y coordinate y of upper left corner of text (increases downwards)
-     * @param color color of text
      */
-    //% block="draw text $text at|x $x|y $y|color $color"
-    //% color.defl=true
+    //% block="draw text $text at|x $x|y $y"
     //% weight=94
-    export function drawText(text: string, x: number, y: number, color: boolean): void {
+    export function drawText(text: string, x: number, y: number): void {
         const font = [
             [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
             [0x00, 0x10, 0x10, 0x10, 0x10, 0x10, 0x00, 0x10, 0x10, 0x00, 0x00],
@@ -235,7 +231,7 @@ namespace oledImages {
                 for (let j = 0; j < 11; j++) {
                     for (let k = 0; k < 8; k++) {
                         if (charset[charsetIndex.indexOf(text[i])][j] & (0x01 << k)) {
-                            setPx(x + ((i - lineStart) * 8) + (8 - k), y + (line * 10) + j, color)
+                            setPx(x + ((i - lineStart) * 8) + (8 - k), y + (line * 10) + j)
                         }
                     }
                 }
@@ -243,7 +239,7 @@ namespace oledImages {
                 for (let l = 0; l < 11; l++) {
                     for (let m = 0; m < 8; m++) {
                         if (font[text[i].charCodeAt(0) - 32][l] & (0x01 << m)) {
-                            setPx(x + ((i - lineStart) * 8) + (8 - m), y + (line * 10) + l, color)
+                            setPx(x + ((i - lineStart) * 8) + (8 - m), y + (line * 10) + l)
                         }
                     }
                 }
@@ -274,7 +270,7 @@ namespace oledImages {
                     for (let y_scale = 0; y_scale < scale; y_scale++) {
                         for (let x_scale = 0; x_scale < scale; x_scale++) {
                             if (c) {
-                                setPx(x + img_x * scale - x_scale + scale, y + img_y * scale - y_scale + scale, c)
+                                setPx(x + img_x * scale - x_scale + scale, y + img_y * scale - y_scale + scale)
                             }
                         }
                     }
