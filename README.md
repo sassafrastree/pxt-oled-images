@@ -25,17 +25,19 @@ oledImages.drawImage(oledImages.imageMapS(`
 // Initiates the screen at the start of the program
 oledImages.init()
 // Draws text
-oledImages.drawText("Hello world", 0, 0, true)
+oledImages.drawText("Hello world", 0, 0)
 ```
 ## Clearing Screen
 
 ```blocks
 // Initiates the screen at the start of the program
 oledImages.init()
-// clears screen
-oledImages.clear()
 // Draws text
-oledImages.drawText("Hello world", 0, 0, true)
+oledImages.drawText("Hello world", 0, 0)
+basic.pause(1000)
+// clear screen
+oledImages.clear()
+
 ```
 
 ## Supported targets
