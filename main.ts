@@ -224,6 +224,10 @@ namespace oledImages {
         let line = 0
         let lineStart = 0
         for (let i = 0; i < text.length; i++) {
+            if ((x + ((i - lineStart) * 8) + 8) >= 128) {
+                line++
+                lineStart = i + 1
+            }
             if (text[i] == '\n') {
                 line++
                 lineStart = i + 1
